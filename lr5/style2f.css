@@ -1,0 +1,32 @@
+      .container {
+        width: 30%;
+        overflow: hidden;
+      }
+
+      .column {
+        float: left;
+        width: 20%;
+        padding: 8px;
+        box-sizing: border-box;
+		 border: 1px solid white; 
+      }
+
+      .header {
+        background-color: #7db6f0;
+        color: white;
+        font-weight: bold;
+      }
+
+      .row {
+        background-color: #7db6f0;
+        color: white;
+      }
+
+      .number {
+        background-color: lightblue;
+        color: darkblue;
+      }
+
+      .clear {
+        clear: both;
+      }
