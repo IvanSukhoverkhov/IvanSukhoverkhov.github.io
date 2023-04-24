@@ -1,0 +1,38 @@
+.main-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #91fff8;
+}
+
+img[alt="world"] {
+  width: 70%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+img[alt="wooden-ship"] {
+  width: 5%;
+  height: auto;
+  position: absolute;
+  top: 56%;
+  left: 37%;
+}
+
+img[alt="water"] {
+  width: 30%;
+  height: auto;
+  position: absolute;
+  top: 65%;
+  left: 35%;
+}
+
+img[alt="clouds"] {
+  width: 20%;
+  height: auto;
+  position: absolute;
+  top: 25%;
+  left: 45%;
+}
