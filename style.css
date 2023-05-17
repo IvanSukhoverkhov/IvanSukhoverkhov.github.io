@@ -47,3 +47,33 @@ a {
   font-size: 20px;
   border-radius: 7px;
 }
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.social-icons .icon-facebook {
+  background-image: url('path/to/facebook-icon.png');
+}
+
+.social-icons .icon-twitter {
+  background-image: url('path/to/twitter-icon.png');
+}
+
+.social-icons .icon-instagram {
+  background-image: url('path/to/instagram-icon.png');
+}
+
+
+
+
+
