@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Знайти найбільше число</title>
+  <script>
+    function findMaxNumber() {
+      // Отримати значення з текстових полів
+      var num1 = parseFloat(document.getElementById('num1').value);
+      var num2 = parseFloat(document.getElementById('num2').value);
+
+      // Перевірка, чи обидва введені значення є числами
+      if (!isNaN(num1) && !isNaN(num2)) {
+        // Знайти найбільше число
+        var maxNumber = Math.max(num1, num2);
+
+        // Вивести результат
+        alert('Найбільше число: ' + maxNumber);
+      } else {
+        alert('Будь ласка, введіть числа у текстові поля.');
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Знайти найбільше число</h1>
+  <input type="text" id="num1" placeholder="Перше число">
+  <input type="text" id="num2" placeholder="Друге число">
+  <button onclick="findMaxNumber()">Знайти найбільше число</button>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Складання двох чисел</title>
+  <script>
+    function addNumbers() {
+      // Отримати значення з текстових полів
+      var num1 = parseFloat(document.getElementById('num1').value);
+      var num2 = parseFloat(document.getElementById('num2').value);
+
+      // Перевірка, чи обидва введені значення є числами
+      if (!isNaN(num1) && !isNaN(num2)) {
+        // Обчислити суму
+        var sum = num1 + num2;
+
+        // Вивести результат
+        alert('Сума: ' + sum);
+      } else {
+        alert('Будь ласка, введіть числа у текстові поля.');
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Складання двох чисел</h1>
+  <input type="text" id="num1" placeholder="Перше число">
+  <input type="text" id="num2" placeholder="Друге число">
+  <button onclick="addNumbers()">Склади</button>
+</body>
+</html>
+
