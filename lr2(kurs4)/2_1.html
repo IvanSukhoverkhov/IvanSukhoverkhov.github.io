@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello from JavaScript!</title>
+    <script>
+        let today = new Date();
+        let newYearDate = new Date(today.getFullYear() + 1, 0, 1);
+
+        document.write('<p> today: ' + today.toLocaleString() + '</p>');
+        document.write('<p> newYearDate: ' + newYearDate.toLocaleString() + '</p>');
+        document.write('<p> Time until New Year: ' + (newYearDate - today) + ' milliseconds</p>');
+		document.write('<p> newYearDate.getTime()-today.getTime(): ' + (newYearDate.getTime() - today.getTime()) + ' milliseconds</p>');
+    </script>
+</head>
+<body>
+</body>
+</html>

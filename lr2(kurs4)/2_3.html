@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello from JavaScript!</title>
+    <script>
+        let today = new Date();
+        let options = {
+            era: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long',
+            timezone: 'UTC',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        };
+
+        document.write(`<p>${today.toLocaleString('ar-EG')}</p>`); // арабська мова
+        document.write(`<p>${today.toLocaleString('ar-EG', options)}</p>`); // арабська мова з параметрами
+        document.write(`<p>${today.toLocaleString('en-US')}</p>`); // дата в англомовних країнах
+        document.write(`<p>${today.toLocaleString('en-GB')}</p>`); // дата в Великобританії
+        document.write(`<p>${today.toLocaleString('en-GB', options)}</p>`); // дата в Великобританії з параметрами
+        document.write(`<p>${today.toLocaleString('uk-UA', options)}</p>`); // дата в Україні з параметрами
+    </script>
+</head>
+<body>
+</body>
+</html>
