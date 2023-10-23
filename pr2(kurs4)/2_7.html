@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Друкарська машинка</title>
+</head>
+<body>
+    <div id="output"></div>
+    <script>
+        const textToType = "Це текст, який друкується як на друкарській машинці.";
+        const outputElement = document.getElementById("output");
+        let currentIndex = 0;
+
+        function typeText() {
+            if (currentIndex < textToType.length) {
+                outputElement.textContent += textToType[currentIndex];
+                currentIndex++;
+                setTimeout(typeText, 100); // Затримка між символами
+            }
+        }
+
+        // Запуск друкарської машинки через 2 секунди
+        setTimeout(typeText, 2000);
+    </script>
+</body>
+</html>

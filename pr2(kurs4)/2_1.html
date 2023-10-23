@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Додавання "0" до часу</title>
+</head>
+<body>
+    <p id="time">Поточний час: <span id="formattedTime"></span></p>
+
+    <script>
+        function addLeadingZero(value) {
+            return value < 10 ? "0" + value : value;
+        }
+
+        function updateFormattedTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const formattedHours = addLeadingZero(hours);
+            const formattedMinutes = addLeadingZero(minutes);
+            const formattedSeconds = addLeadingZero(seconds);
+
+            const formattedTime = formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+            document.getElementById("formattedTime").textContent = formattedTime;
+        }
+
+        // Оновлення часу кожну секунду
+        setInterval(updateFormattedTime, 1000);
+
+        // Виклик функції для початкового відображення часу
+        updateFormattedTime();
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оновлення часу</title>
+</head>
+<body>
+    <div id="clock"></div>
+    <button onclick="updateTime()">Оновити час</button>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById("clock").textContent = timeString;
+        }
+    </script>
+</body>
+</html>

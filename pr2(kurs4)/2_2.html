@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Годинник зі спливаючим вікном</title>
+</head>
+<body>
+
+<div id="clock"></div>
+
+<script>
+	function updateClock() {
+		const now = new Date();
+		const hours = now.getHours().toString().padStart(2, '0');
+		const minutes = now.getMinutes().toString().padStart(2, '0');
+		const seconds = now.getSeconds().toString().padStart(2, '0');
+		const currentTime = `${hours}:${minutes}:${seconds}`;
+		
+		document.getElementById("clock").textContent = currentTime;
+
+		setTimeout(updateClock, 1000);
+	}
+
+	let elapsedSeconds = 0;
+
+	function checkElapsedTime() {
+		elapsedSeconds++;
+		if (elapsedSeconds === 60) {
+			alert("Пройшла ще одна хвилина!");
+			elapsedSeconds = 0;
+		}
+		setTimeout(checkElapsedTime, 1000);
+	}
+
+	updateClock();
+	checkElapsedTime();
+</script>
+
+</body>
+</html>
