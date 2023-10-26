@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CAPTCHA</title>
+  
+</head>
+<body>
+    <h1>CAPTCHA</h1>
+    <p>Будь ласка, введіть числа, які ви бачите на зображенні:</p>
+    <div id="captcha"></div>
+    <input type="text" id="userInput">
+    <button onclick="checkCaptcha()">Перевірити</button>
+    <p id="result"></p>
+
+    <script>
+        function generateCaptcha(length) {
+            var captchaContainer = document.getElementById("captcha");
+            captchaContainer.innerHTML = ""; // Очищення попередньої CAPTCHA
+
+            for (var i = 0; i < length; i++) {
+                var digit = Math.floor(Math.random() * 10); // Генерувати випадкову цифру
+                var pixelSpan = document.createElement("span");
+                pixelSpan.className = "pixel";
+                pixelSpan.textContent = digit;
+                captchaContainer.appendChild(pixelSpan);
+            }
+        }
+
+        function checkCaptcha() {
+            var userInput = document.getElementById("userInput").value;
+            var captcha = document.getElementById("captcha").textContent.replace(/\s/g, ''); // Видаляємо пробіли
+
+            if (userInput === captcha) {
+                document.getElementById("result").textContent = "Правильно!";
+            } else {
+                document.getElementById("result").textContent = "Неправильно. Спробуйте ще раз.";
+                generateCaptcha(captcha.length); // Оновлюємо CAPTCHA
+            }
+        }
+
+        generateCaptcha(4); // Ініціалізуємо CAPTCHA з 4 цифрами
+    </script>
+</body>
+</html>

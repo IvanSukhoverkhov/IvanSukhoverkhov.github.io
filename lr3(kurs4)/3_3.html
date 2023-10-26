@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Таблиця множення (радіокнопки)</title>
+</head>
+<body>
+    <h1>Таблиця множення (радіокнопки)</h1>
+    <p id="question">Питання: </p>
+    <form id="answerForm">
+        <div id="answerOptions"></div>
+        <button type="button" onclick="checkAnswer()">Перевірити</button>
+    </form>
+    <p id="result"></p>
+    <button onclick="generateQuestion()">Наступне завдання</button>
+
+    <script>
+        var num1, num2, correctAnswer;
+        var answerOptions = [];
+
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            correctAnswer = num1 * num2;
+            document.getElementById("question").textContent = "Питання: " + num1 + " * " + num2 + " =";
+            var radioOptions = document.getElementById("answerOptions");
+            radioOptions.innerHTML = "";
+
+            // Генеруємо правильну відповідь
+            answerOptions.push(correctAnswer);
+
+            // Генеруємо 4 неправильні відповіді
+            for (var i = 0; i < 4; i++) {
+                var wrongAnswer;
+                do {
+                    wrongAnswer = Math.floor(Math.random() * 100) + 1; // Генеруємо випадкову неправильну відповідь
+                } while (answerOptions.includes(wrongAnswer)); // Перевіряємо, чи не дублюється відповідь
+                answerOptions.push(wrongAnswer);
+            }
+
+            // Перемішуємо варіанти відповідей
+            answerOptions.sort(function() { return 0.5 - Math.random(); });
+
+            // Додаємо радіокнопки для варіантів відповідей
+            for (var i = 0; i < answerOptions.length; i++) {
+                var radioButton = document.createElement("input");
+                radioButton.type = "radio";
+                radioButton.name = "answer";
+                radioButton.value = answerOptions[i];
+                radioButton.id = "answer" + (i + 1);
+                var label = document.createElement("label");
+                label.htmlFor = "answer" + (i + 1);
+                label.appendChild(document.createTextNode(answerOptions[i]));
+                radioOptions.appendChild(radioButton);
+                radioOptions.appendChild(label);
+                radioOptions.appendChild(document.createElement("br"));
+            }
+
+            answerOptions = []; // Очищуємо масив варіантів відповідей
+            document.getElementById("result").textContent = "";
+        }
+
+        function checkAnswer() {
+            var userAnswer = document.querySelector('input[name="answer"]:checked');
+            if (userAnswer === null) {
+                document.getElementById("result").textContent = "Будь ласка, виберіть відповідь.";
+            } else {
+                userAnswer = parseInt(userAnswer.value);
+                if (userAnswer === correctAnswer) {
+                    document.getElementById("result").textContent = "Правильно!";
+                } else {
+                    document.getElementById("result").textContent = "Неправильно. Правильна відповідь: " + correctAnswer;
+                }
+            }
+        }
+
+        generateQuestion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Конвертер температур</title>
+</head>
+<body>
+    <h1>Конвертер температур</h1>
+    <label>Температура за Фаренгейтом:</label>
+    <input type="text" id="fahrenheitInput">
+    <button onclick="convertToCelsius()">Фаренгейт в Цельсії</button>
+    <br>
+    <label>Температура за Цельсієм:</label>
+    <input type="text" id="celsiusInput">
+    <button onclick="convertToFahrenheit()">Цельсій в Фаренгейт</button>
+
+    <script>
+        function convertToCelsius() {
+            var fahrenheit = parseFloat(document.getElementById("fahrenheitInput").value);
+            var celsius = (fahrenheit - 32) * 5/9;
+            document.getElementById("celsiusInput").value = celsius.toFixed(2);
+        }
+
+        function convertToFahrenheit() {
+            var celsius = parseFloat(document.getElementById("celsiusInput").value);
+            var fahrenheit = (celsius * 9/5) + 32;
+            document.getElementById("fahrenheitInput").value = fahrenheit.toFixed(2);
+        }
+    </script>
+</body>
+</html>
