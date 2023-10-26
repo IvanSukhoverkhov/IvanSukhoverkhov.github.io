@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Фотогалерея дерев</title>
+    <style>
+        .image-container {
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 2px solid #008000; /* Зелена рамка для дерев */
+        }
+
+        .image-info {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Фотогалерея дерев</h1>
+    <div id="rotator"></div>
+
+    <script>
+        function initPhotoRotator(containerId, images) {
+            const container = document.getElementById(containerId);
+
+            if (!container) {
+                console.error("Container not found.");
+                return;
+            }
+
+            let currentIndex = 0;
+
+            function showImage(index) {
+                const imageContainer = document.createElement("div");
+                imageContainer.classList.add("image-container");
+
+                const image = document.createElement("img");
+                image.src = images[index].path;
+                image.alt = images[index].title;
+
+                const imageInfo = document.createElement("div");
+                imageInfo.classList.add("image-info");
+                const imageTitle = document.createElement("h3");
+                imageTitle.textContent = images[index].title;
+                const imageDescription = document.createElement("p");
+                imageDescription.textContent = images[index].description;
+
+                imageInfo.appendChild(imageTitle);
+                imageInfo.appendChild(imageDescription);
+
+                const controls = document.createElement("div");
+                controls.classList.add("controls");
+
+                const prevButton = document.createElement("button");
+                prevButton.textContent = "Назад";
+                prevButton.addEventListener("click", function () {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        showImage(currentIndex);
+                    }
+                });
+                if (currentIndex === 0) {
+                    prevButton.disabled = true;
+                }
+
+                const nextButton = document.createElement("button");
+                nextButton.textContent = "Вперед";
+                nextButton.addEventListener("click", function () {
+                    if (currentIndex < images.length - 1) {
+                        currentIndex++;
+                        showImage(currentIndex);
+                    }
+                });
+                if (currentIndex === images.length - 1) {
+                    nextButton.disabled = true;
+                }
+
+                const imageCounter = document.createElement("p");
+                imageCounter.textContent = `${currentIndex + 1} з ${images.length}`;
+
+                controls.appendChild(prevButton);
+                controls.appendChild(nextButton);
+                controls.appendChild(imageCounter);
+
+                imageContainer.appendChild(image);
+                imageContainer.appendChild(imageInfo);
+
+                container.innerHTML = "";
+                container.appendChild(imageContainer);
+                container.appendChild(controls);
+            }
+
+            showImage(currentIndex);
+        }
+
+        const imagesArray = [
+            {
+                path: 'images/dub-chempion.avif',
+                title: 'Дуб',
+                description: 'Величезний дуб у лісі'
+            },
+            {
+                path: 'images/wood-way.jpg',
+                title: 'Лісовий шлях',
+                description: 'Лісовий шлях серед дерев'
+            },
+            {
+                path: 'images/woods-spring.jpg',
+                title: 'Весняні дерева',
+                description: 'Квітучі дерева весною'
+            }
+        ];
+
+        initPhotoRotator('rotator', imagesArray);
+    </script>
+</body>
+</html>
