@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Карусель зображень</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .carousel-container {
+            width: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            white-space: nowrap;
+            transition: transform 0.3s; 
+        }
+
+        .carousel ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex; 
+            transition: transform 0.3s; 
+        }
+
+        .carousel li {
+            flex: 0 0 300px;
+        }
+
+        .carousel img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .prev-button, .next-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .prev-button {
+            left: 0;
+        }
+
+        .next-button {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <ul>
+                <li><img src="image1.jpg" alt="Зображення 1"></li>
+                <li><img src="image2.jpg" alt="Зображення 2"></li>
+                <li><img src="image3.jpg" alt="Зображення 3"></li>
+                <li><img src="image4.jpg" alt="Зображення 4"></li>
+            </ul>
+        </div>
+        <button class="prev-button">←</button>
+        <button class="next-button">→</button>
+    </div>
+
+    <script>
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+        const carousel = document.querySelector('.carousel ul');
+
+        let currentPosition = 0;
+
+        prevButton.addEventListener('click', () => {
+            currentPosition += 300;
+            if (currentPosition > 0) {
+                currentPosition = -((carousel.children.length - 1) * 300);
+            }
+            carousel.style.transform = `translateX(${currentPosition}px)`;
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentPosition -= 300;
+            if (currentPosition < -((carousel.children.length - 1) * 300)) {
+                currentPosition = 0;
+            }
+            carousel.style.transform = `translateX(${currentPosition}px)`;
+        });
+    </script>
+</body>
+</html>

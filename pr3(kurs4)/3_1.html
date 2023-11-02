@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Повідомлення з кнопками для приховування та відображення</title>
+</head>
+<body>
+    <ul id="message-list">
+        <li>
+            Повідомлення 1 <button class="hide-button">Приховати</button>
+        </li>
+        <li>
+            Повідомлення 2 <button class="hide-button">Приховати</button>
+        </li>
+        <li>
+            Повідомлення 3 <button class="hide-button">Приховати</button>
+        </li>
+    </ul>
+
+    <button id="show-hidden">Показати приховані повідомлення</button>
+
+    <script>
+        const messageList = document.getElementById('message-list');
+        const showHiddenButton = document.getElementById('show-hidden');
+        const hideButtons = document.querySelectorAll('.hide-button');
+        const hiddenMessages = [];
+
+        hideButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const message = button.parentNode;
+                message.style.display = 'none';
+                hiddenMessages.push(message);
+            });
+        });
+
+        showHiddenButton.addEventListener('click', () => {
+            hiddenMessages.forEach(message => {
+                message.style.display = 'list-item';
+            });
+            hiddenMessages.length = 0;
+        });
+    </script>
+</body>
+</html>
