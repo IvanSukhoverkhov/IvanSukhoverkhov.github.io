@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#block {
+  width: 100px;
+  height: 100px;
+  background: green;
+}
+</style>
+</head>
+<body>
+<div>Верхній лівий радіус:
+  <input type="range" id="rtl" min="0" max="100" value="0" oninput="generate()">
+  <input type="text" id="ttl" value="0">
+</div>
+
+<div>Верхній правий радіус:
+  <input type="range" id="rtr" min="0" max="100" value="0" oninput="generate()">
+  <input type="text" id="ttr" value="0">
+</div>
+
+<div>Нижній правий радіус:
+  <input type="range" id="rbr" min="0" max="100" value="0" oninput="generate()">
+  <input type="text" id="tbr" value="0">
+</div>
+
+<div>Нижній лівий радіус:
+  <input type="range" id="rbl" min="0" max="100" value="0" oninput="generate()">
+  <input type="text" id="tbl" value="0">
+</div>
+
+<textarea id="cssCode" rows="4" cols="50"></textarea>
+
+<div id="block"></div>
+
+<script>
+function generate() {
+  var rtl = document.getElementById('rtl').value;
+  var rtr = document.getElementById('rtr').value;
+  var rbr = document.getElementById('rbr').value;
+  var rbl = document.getElementById('rbl').value;
+
+  var ttl = document.getElementById('ttl');
+  var ttr = document.getElementById('ttr');
+  var tbr = document.getElementById('tbr');
+  var tbl = document.getElementById('tbl');
+  
+  ttl.value = rtl;
+  ttr.value = rtr;
+  tbr.value = rbr;
+  tbl.value = rbl;
+
+  var block = document.getElementById('block');
+  block.style.borderRadius = rtl + "px " + rtr + "px " + rbr + "px " + rbl + "px";
+  
+  var cssCode = "border-radius: " + rtl + "px " + rtr + "px " + rbr + "px " + rbl + "px;";
+  document.getElementById('cssCode').value = cssCode;
+}
+</script>
+
+</body>
+</html>
