@@ -1,0 +1,76 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Wherever you go, there you are</title>
+</head>
+<body>
+<form>
+  <input type="button" id="watch" value="Watch me"> 
+  <input type="button" id="clearWatch" value="Clear watch"> 
+</form>
+<div id="location">
+  Your location will go here.
+</div>
+<div id="distance">
+  Distance from College will go here.
+</div>
+<div id="map" style="height: 180px;">
+</div>
+<script>
+  function displayLocation(position) {
+    // Обробка отриманих координат та оновлення DOM елементів
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+  }
+
+  function displayError(error) {
+    // Обробка помилок геолокації
+    var errorTypes = {
+      0: "Unknown error",
+      1: "Permission denied by user",
+      2: "Position is not available",
+      3: "Request timed out"
+    };
+    var errorMessage = errorTypes[error.code];
+    if (error.code == 0 || error.code == 2) {
+      errorMessage += " " + error.message;
+    }
+    alert(errorMessage);
+  }
+
+  var watchID; // Глобальна змінна для відстеження ідентифікатора відстеження
+
+  function watchLocation() {
+    // Запуск відстеження місцезнаходження
+    var options = { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 };
+    watchID = navigator.geolocation.watchPosition(displayLocation, displayError, options);
+  }
+
+  function clearWatch() {
+    // Зупинка відстеження місцезнаходження
+    if (watchID) {
+      navigator.geolocation.clearWatch(watchID);
+      watchID = null;
+    }
+  }
+
+  function getMyLocation() {
+    if (navigator.geolocation) {
+      var watchButton = document.getElementById("watch");
+      watchButton.onclick = watchLocation;
+
+      var clearWatchButton = document.getElementById("clearWatch");
+      clearWatchButton.onclick = clearWatch;
+
+      navigator.geolocation.getCurrentPosition(displayLocation, displayError);
+    } else {
+      alert("Oops, no geolocation support");
+    }
+  }
+
+  // Виклик функції getMyLocation після завантаження сторінки
+  window.onload = getMyLocation;
+</script>
+</body>
+</html>

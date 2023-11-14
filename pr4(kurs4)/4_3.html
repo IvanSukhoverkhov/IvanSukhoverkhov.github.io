@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Distance Calculator</title>
+</head>
+<body>
+  <div id="location">
+    Your location will go here.
+  </div>
+  <div id="distance">
+    Distance from College will go here.
+  </div>
+
+  <script>
+    function displayLocation(position) {
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+      let accuracy = position.coords.accuracy;
+
+      let div = document.getElementById("location");
+      div.innerHTML = `You are at Latitude: ${latitude}, Longitude: ${longitude} (with ${accuracy} meters accuracy)`;
+
+      let ourCoords = { latitude: 48.94321, longitude: 24.73380 };
+      let km = computeDistance(position.coords, ourCoords);
+
+      let distance = document.getElementById("distance");
+      distance.innerHTML = `You are ${km.toFixed(2)} km from the College`;
+    }
+
+    function computeDistance(startCoords, destCoords) {
+      let startLatRads = degreesToRadians(startCoords.latitude);
+      let startLongRads = degreesToRadians(startCoords.longitude);
+      let destLatRads = degreesToRadians(destCoords.latitude);
+      let destLongRads = degreesToRadians(destCoords.longitude);
+      let Radius = 6371; // вказаний радіус землі у км
+
+      let distance = Math.acos(
+        Math.sin(startLatRads) * Math.sin(destLatRads) +
+        Math.cos(startLatRads) * Math.cos(destLatRads) * Math.cos(startLongRads - destLongRads)
+      ) * Radius;
+
+      return distance;
+    }
+
+    function degreesToRadians(degrees) {
+      let radians = (degrees * Math.PI) / 180;
+      return radians;
+    }
+
+    navigator.geolocation.getCurrentPosition(displayLocation);
+  </script>
+</body>
+</html>

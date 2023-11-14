@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Де я?</title>
+</head>
+<body>
+    <div id="location">
+        Тут буде ваше місцезнаходження.
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', getMyLocation);
+
+        function getMyLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(displayLocation, errorHandler);
+            } else {
+                alert("Ой, немає підтримки геолокації");
+            }
+        }
+
+        function displayLocation(position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            let div = document.getElementById("location");
+            div.innerHTML = `Ви знаходитесь на широті: ${latitude}, довготі: ${longitude}`;
+        }
+
+        function errorHandler(error) {
+            const errorTypes = {
+                0: "Невідома помилка",
+                1: "Дозвіл відмовлено користувачем",
+                2: "Місцезнаходження недоступне",
+                3: "Запит завершився тайм-аутом"
+            };
+
+            const errorMessage = errorTypes[error.code] + " " + error.message;
+
+            let div = document.getElementById("location");
+            div.innerHTML = errorMessage;
+        }
+    </script>
+</body>
+</html>
