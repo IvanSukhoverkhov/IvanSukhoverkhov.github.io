@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #app {
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox {
+      margin-right: 10px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: grey;
+    }
+  </style>
+  <title>Список завдань</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" id="taskInput" placeholder="Додати нове завдання">
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const taskInput = document.getElementById('taskInput');
+      const taskList = document.getElementById('taskList');
+
+      taskInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter' && taskInput.value.trim() !== '') {
+          addTask(taskInput.value.trim());
+          taskInput.value = '';
+        }
+      });
+
+      function addTask(taskText) {
+        const listItem = document.createElement('li');
+        const checkbox = document.createElement('input');
+        const taskTextElement = document.createElement('span');
+        const deleteButton = document.createElement('span');
+
+        checkbox.type = 'checkbox';
+        checkbox.classList.add('checkbox');
+        taskTextElement.textContent = taskText;
+        deleteButton.textContent = '❌';
+        deleteButton.classList.add('delete-button');
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(taskTextElement);
+        listItem.appendChild(deleteButton);
+        taskList.appendChild(listItem);
+
+        checkbox.addEventListener('change', function () {
+          if (checkbox.checked) {
+            listItem.classList.add('completed');
+            checkbox.style.display = 'none';
+          } else {
+            listItem.classList.remove('completed');
+            checkbox.style.display = 'inline';
+          }
+        });
+
+        deleteButton.addEventListener('click', function () {
+          taskList.removeChild(listItem);
+        });
+
+        listItem.addEventListener('dblclick', function () {
+          const editInput = document.createElement('input');
+          editInput.type = 'text';
+          editInput.value = taskText;
+          listItem.replaceChild(editInput, taskTextElement);
+          editInput.focus();
+
+          editInput.addEventListener('blur', function () {
+            taskText = editInput.value;
+            taskTextElement.textContent = taskText;
+            listItem.replaceChild(taskTextElement, editInput);
+          });
+
+          editInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+              taskText = editInput.value;
+              taskTextElement.textContent = taskText;
+              listItem.replaceChild(taskTextElement, editInput);
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
