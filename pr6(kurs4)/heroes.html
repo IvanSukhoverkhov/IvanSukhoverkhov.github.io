@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header, section {
+            width: 100%;
+        }
+
+        .hero-card {
+            display: inline-block; /* блок на inline-block для горизонтального розміщення */
+            text-align: left; /* left text-align для вирівнювання тексту */
+            margin: 10px; /* margin для відступів між блоками героїв */
+            padding: 10px;
+        }
+
+        /* Add your styles here if needed */
+    </style>
+    <title>Список завдань</title>
+</head>
+
+<body>
+    <header>
+        <h1 id="squadName">Super Hero Squad</h1>
+        <p id="formedYear">Formed: </p>
+    </header>
+
+    <section id="heroesSection"></section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const header = document.querySelector('header');
+            const squadNameElement = document.getElementById('squadName');
+            const formedYearElement = document.getElementById('formedYear');
+            const section = document.getElementById('heroesSection');
+            const requestURL = 'https://semegenkep.github.io/json/example.json';
+
+            function fetchData(url, callback) {
+                const request = new XMLHttpRequest();
+                request.open('GET', url);
+                request.responseType = 'json';
+                request.send();
+
+                request.onload = function () {
+                    if (request.status === 200) {
+                        callback(request.response);
+                    } else {
+                        console.error('Failed to fetch data');
+                    }
+                };
+            }
+
+            fetchData(requestURL, function (superHeroes) {
+                populateHeader(superHeroes);
+                showHeroes(superHeroes);
+            });
+
+            function populateHeader(data) {
+                squadNameElement.textContent = data.squadName;
+                formedYearElement.textContent = 'Formed: ' + data.formed;
+            }
+
+            function showHeroes(data) {
+                const members = data.members;
+                for (const hero of members) {
+                    const heroCard = document.createElement('div');
+                    heroCard.classList.add('hero-card');
+
+                    const heroName = document.createElement('h2');
+                    heroName.textContent = hero.name;
+
+                    const heroAge = document.createElement('p');
+                    heroAge.textContent = 'Age: ' + hero.age;
+
+                    const secretIdentity = document.createElement('p');
+                    secretIdentity.textContent = 'Secret Identity: ' + hero.secretIdentity;
+
+                    const powersList = document.createElement('ul');
+                    const powers = hero.powers.map(power => {
+                        const powerItem = document.createElement('li');
+                        powerItem.textContent = power;
+                        return powerItem;
+                    });
+                    powers.forEach(powerItem => powersList.appendChild(powerItem));
+
+                    heroCard.appendChild(heroName);
+                    heroCard.appendChild(heroAge);
+                    heroCard.appendChild(secretIdentity);
+                    heroCard.appendChild(powersList);
+
+                    section.appendChild(heroCard);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
