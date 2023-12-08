@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Футбольні товари</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    #cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .products {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      width: 250px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 5px;
+      color: #007bff;
+    }
+
+    .discount {
+      display: block;
+      margin-top: 5px;
+      color: #28a745;
+    }
+
+    .not-in-stock {
+      display: block;
+      margin-top: 5px;
+      color: #dc3545;
+    }
+
+    .tns-controls {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .product-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cart-icon" onclick="showCartModal()">🛒</div>
+
+  <div class="products" id="product-container">
+
+  </div>
+
+  <div id="quantity-modal" class="modal">
+    <p>Вкажіть кількість:</p>
+    <input type="number" id="quantity-input" min="1" value="1">
+    <button onclick="addToCartWithQuantity()">Додати до корзини</button>
+  </div>
+
+  <div id="added-modal" class="modal">
+    <p>Товар додано!</p>
+    <button onclick="goToCart()">Перейти у корзину</button>
+    <button onclick="continueShopping()">Повернутись до покупок</button>
+  </div>
+
+  <div id="empty-cart-modal" class="modal">
+    <p>Корзина пуста</p>
+  </div>
+
+  <script>
+    let cart = [];
+    let selectedProduct = {};
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Використовуємо fetch API для запиту до файлу JSON
+      fetch('https://ivansukhoverkhov.github.io/json/lr6.json')
+        .then(response => response.json())
+        .then(products => displayProducts(products))
+        .catch(error => console.error('Помилка завантаження товарів:', error));
+    });
+
+    function displayProducts(products) {
+      const productContainer = document.getElementById('product-container');
+
+      // Додаємо картки товарів на сторінку
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+
+        const isNew = product.label === 'Новинка' ? '<span class="label">Новинка</span>' : '';
+        const isBestSeller = product.label === 'Хіт продажів' ? '<span class="label">Хіт продажів</span>' : '';
+        const discount = product.discount ? `<span class="discount">Знижка ${product.discount}%</span>` : '';
+        const notInStock = product.inStock === false ? '<span class="not-in-stock">Немає в наявності</span>' : '';
+
+        productCard.innerHTML = `
+          <img src="https://ivansukhoverkhov.github.io/json/${product.image}" alt="${product.name}" class="product-image">
+          ${isNew}
+          ${isBestSeller}
+          ${discount}
+          ${notInStock}
+          <h3>${product.name}</h3>
+          <p>Ціна: $${product.price}</p>
+          <button onclick="addToCart('${product.name}', ${product.price})">Додати у корзину</button>
+        `;
+
+        productContainer.appendChild(productCard);
+      });
+
+      // Ініціалізуємо карусель за допомогою бібліотеки tiny-slider
+    const slider = tns({
+        container: '#product-container',
+        items: 1,
+        slideBy: 'page',
+        autoplay: false,
+        controls: false,
+        nav: false
+      });
+    }
+
+    function showCartModal() {
+      if (cart.length === 0) {
+        document.getElementById('empty-cart-modal').style.display = 'block';
+      } else {
+        alert('Redirecting to the cart page');
+      }
+    }
+
+    function addToCart(productName, price) {
+      document.getElementById('quantity-modal').style.display = 'block';
+      selectedProduct = { name: productName, price: price };
+    }
+
+    function addToCartWithQuantity() {
+      const quantity = document.getElementById('quantity-input').value;
+      cart.push({ name: selectedProduct.name, quantity: parseInt(quantity), price: selectedProduct.price });
+      document.getElementById('quantity-modal').style.display = 'none';
+      document.getElementById('added-modal').style.display = 'block';
+      updateCartIcon();
+    }
+
+    function goToCart() {
+      // Зберігаємо дані кошика в localStorage перед переходом на сторінку корзини
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = 'cart.html';
+    }
+
+    function continueShopping() {
+      document.getElementById('added-modal').style.display = 'none';
+    }
+
+    function updateCartIcon() {
+      const cartIcon = document.getElementById('cart-icon');
+      const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+      cartIcon.innerText = `🛒 ${itemCount}`;
+    }
+  </script>
+
+</body>
+</html>
