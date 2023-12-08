@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Футбольний м'яч ProKick",
+    "image": "ProKick.webp",
+    "price": 25
+  },
+  {
+    "name": "Футбольні шкарпетки ComfortFit",
+    "image": "ComfortFit.webp",
+    "price": 8
+  },
+  {
+    "name": "Футбольні бутси PowerStrike",
+    "image": "PowerStrike.webp",
+    "price": 50
+  },
+  {
+    "name": "Футбольний конусний набір AgilityPro",
+    "image": "AgilityPro.webp",
+    "price": 15
+  }
+]
