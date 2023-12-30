@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sukhoverkhov_18</title>
+</head>
+<body>
+
+    <input type="text" id="input" placeholder="Enter your data" onblur="splitName()">
+
+    <input type="text" id="lastName" placeholder="Last Name">
+    <input type="text" id="firstName" placeholder="First Name">
+    <input type="text" id="middleName" placeholder="Middle Name">
+
+    <script>
+        function splitName() {
+            // Отримати значення введеного ПІБ
+            var fullName = document.getElementById('input').value;
+
+            // Розбити ПІБ на компоненти 
+            var nameComponents = fullName.split(' ');
+
+            // Записати значення в окремі input
+            document.getElementById('lastName').value = nameComponents[0] || '';
+            document.getElementById('firstName').value = nameComponents[1] || '';
+            document.getElementById('middleName').value = nameComponents[2] || '';
+        }
+    </script>
+
+</body>
+</html>
